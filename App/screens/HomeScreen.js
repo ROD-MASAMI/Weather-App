@@ -1,12 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, SafeAreaView,ScrollView, FlatList, View,Button, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, Image, Dimensions} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import COLORS from '../consts/colors';
 import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import houses from '../consts/houses';
 import axios, { Axios } from 'axios';
 const {width} = Dimensions.get('screen');
+const ITEM_HEIGHT = 250;
 const HomeScreen = () =>{
+    const getItemLayout = useCallback(
+        (data, index) =>({
+            length: ITEM_HEIGHT,
+            offset: ITEM_HEIGHT * index,
+            index,
+        }),
+        []
+    );
 
      const Categories = () =>{
          const [selectedIndex, setSelectedIndex]= React.useState(
@@ -24,16 +34,40 @@ const HomeScreen = () =>{
      };
 
      const Card = ({item}) =>{
-         return <View style={styles.card}>
+         return (<View style={styles.card}>
              <Image source={item.image} style={styles.cardImage} />
-         </View>;
+             <View style={{
+                 flexDirection: 'row',
+                 justifyContent: 'space-between',
+                 marginTop: 10,
+             }}>  
+               <Text style={{fontSize: 16, fontWeight: 'bold'}}>{item.title}</Text>
+               <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.blue}}>{item.price}</Text>
+              </View>
+              <Text style={{color:COLORS.grey, fontSize: 14, marginTop: 5}}>{item.location}</Text>
+         <View style={{marginTop:10, flexDirection: 'row'}}>
+             <View style={styles.facility}>
+             <FontAwesome name="bed" size={18} color="black" />
+             <Text style={styles.facilityText}>{item.bedroom}</Text>
+             </View>
+             <View style={styles.facility}>
+             <FontAwesome name="bathtub" size={18} color="black" />
+             <Text style={styles.facilityText}>{item.bathroom}</Text>
+             </View>
+             <View style={styles.facility}>
+             <MaterialIcons name="aspect-ratio" size={18} color="black" />
+             <Text style={styles.facilityText}>{item.size}</Text>
+             </View>
+         </View>
+         </View>
+         );
      };
  return(
     <TouchableWithoutFeedback onPress={()=>{
         Keyboard.dismiss();
       }}>
          
-     <SafeAreaView style={{backgroundColor: COLORS.white, flex: 1}}>
+     <SafeAreaView style={{backgroundColor: 'lightgrey', flex: 1,}}>
 
 <View style={styles.header}>
 <View>
@@ -62,9 +96,10 @@ const HomeScreen = () =>{
        
 </View>
 <FlatList
-       contentContainerStyle={{paddingBottom: 20, paddingVertical: 20}} 
+       contentContainerStyle={{paddingBottom: 20, paddingVertical: 20, paddingLeft: 20,}} 
        vertical={true}
        data={houses}
+       getItemLayout={getItemLayout}
        renderItem={Card}           
        />
  </SafeAreaView>
@@ -135,6 +170,15 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 120,
         borderRadius: 15,
+    },
+    facility:{
+        flexDirection: 'row',
+        marginRight: 15, 
+    },
+    facilityText:{
+        marginLeft: 5,
+        color: COLORS.grey,
+
     }
 });
 export default HomeScreen;

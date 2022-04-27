@@ -1,10 +1,14 @@
 const houses = [
     {
       id: '1',
-      title: 'Entire guest suite',
-      location: 'East Side Cedar Cottage Toronto',
+      title: 'Ghorofa jipya',
+      price:'$1500',
+      bathroom:'3',
+      bedroom:'2',
+      size:'200m',
+      location: 'Mlalakuwa surevy kwa msekwa',
       image: require('../assets/house1.jpg'),
-      details: `This building is located in the Oliver area, withing walking distance of shops...`,
+      details: `This building is located in the mlalakuwa area close to mpakani and survey bus stops..`,
       interiors: [
         require('../assets/interior1.jpg'),
         require('../assets/interior2.jpg'),
@@ -13,8 +17,12 @@ const houses = [
     },
     {
       id: '2',
-      title: 'Private room in house',
-      location: 'Down town house suite Toronto',
+      title: 'Kwa Mzee Shoo',
+      price:'$1800',
+      bathroom:'5',
+      bedroom:'6',
+      size:'400m',
+      location: 'Mlalakuwa survey close to Pius Msekwa',
       image: require('../assets/house2.jpg'),
       details: `This building is located in the Oliver area, withing walking distance of shops...`,
       interiors: [
@@ -25,8 +33,12 @@ const houses = [
     },
     {
       id: '3',
-      title: 'Entire apartment',
-      location: '3Mins to Skytrain/Garden/Stadium/100% Toronto',
+      title: 'Msewe Appartments',
+      price:'$2200',
+      bathroom:'2',
+      bedroom:'3',
+      size:'170m',
+      location: 'Close to the UDSM main campus(10 min drive) ',
       image: require('../assets/house3.jpg'),
       details: `This building is located in the Oliver area, withing walking distance of shops...`,
       interiors: [
@@ -37,8 +49,12 @@ const houses = [
     },
     {
       id: '4',
-      title: 'Private room in apartment',
-      location: 'Small room in cozy DT Vancouver apartment! Toronto',
+      title: 'Mama saada',
+      price:'$3000',
+      bathroom:'2',
+      bedroom:'1',
+      size:'150m',
+      location: 'Mpakani area close to the bust stop',
       image: require('../assets/house4.jpg'),
       details: `This building is located in the Oliver area, withing walking distance of shops...`,
       interiors: [
