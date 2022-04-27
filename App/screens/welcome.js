@@ -1,74 +1,66 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, View, Text } from 'react-native';
+import { ImageBackground, StyleSheet, View, Text, SafeAreaView,Image } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+
 
 
 function Welcome({navigation}){
    
     return(
-        <ImageBackground
-        style={styles.background}
-        source={require("../assets/rent4.jpg")}
-        >
-            
-        <View style={styles.login}>
-            <TouchableOpacity  onPress={() => navigation.navigate('LoginScreen')}>
-            <Text style={styles.loginText}>LOGIN</Text>
-            </TouchableOpacity>
+        <SafeAreaView style={{flex:1, backgroundColor: 'lightgrey'}}>
+             
+             <Image
+               source={require("../assets/rent4.jpg")}
+               style={styles.image}
+             />
+             <View style={{paddingHorizontal: 20, paddingTop: 35}}>
+                  <View>
+                      <Text style={styles.title}>HOUSE RENTAL</Text>
+                      <Text style={styles.title}> SYSTEM</Text>
+                  </View>
+                  <View style={{marginTop:10}}>
+                      <Text style={styles.info}>Bringing all houses at your finger tips</Text>
+                  </View>
+             </View>
+        <View style={{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
+           <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+           <View style={styles.btn}>
+               <Text style={{color: 'white'}}>GET STARTED</Text>
+           </View>
+           </TouchableOpacity>
+           
         </View>
-        <View style={styles.register}>
-            <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')} >
-        <Text style={styles.registerText}>REGISTER</Text> 
-        </TouchableOpacity>
-        </View>
-        </ImageBackground>
+        
+
+        </SafeAreaView>
     
     );
 }
  
 const styles = StyleSheet.create({
-    background:{
-        width: 480,
-        height: 510,
-        flex: 1,
-        justifyContent: 'flex-end',
-        backgroundColor: '#fff',
+     image:{
+         height: '60%',
+         width: '100%',
+         borderBottomLeftRadius: 100,
+     },
+     title:{
+          fontSize: 32,
+          fontWeight: 'bold',
+     },
+     info:{
+         fontSize: 16,
+         color: 'grey'
+     },
+     btn:{
+         height: 60,
+         marginHorizontal: 20,
+         backgroundColor: 'black',
+         borderRadius: 15,
+         justifyContent: 'center',
+         alignItems: 'center',
+
+     }
     
-    },
-    login:{
-        width: '100%',
-        height: 80,
-        backgroundColor: '#fc5c65',
-        alignItems: 'center',
-    },
-    register:{
-        width: '100%',
-        height: 80,
-        backgroundColor: '#4ecdc4',
-    },
-    text:{
-        fontWeight: 'bold',
-        fontSize: 30,
-    },
-    loginText:{
-        color: '#fff',
-        fontSize: 45,
-        paddingRight: 110,
-        paddingTop: 16,
-        
-        
-    },
-    registerText:{
-        color: '#fff',
-        fontSize: 45,
-        paddingRight: 60,
-        paddingTop: 19,
-        paddingLeft: 90,
-        
-        
-    }
-  
-
-})
-
+});
 export default Welcome;
