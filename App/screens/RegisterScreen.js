@@ -17,9 +17,9 @@ const onRegister = (name, type, phone, email, password) => {
 if(!email && !name)
 alert(email)
 else{
-  axios.post('https://f6cc-197-250-98-126.eu.ngrok.io/api/register',{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
+  axios.post('https://349c-197-250-194-228.eu.ngrok.io/api/register',{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
     console.log(response.message)
-  }).catch(error => alert(error))
+  }).catch(error => console.log(error))
   
 }
 

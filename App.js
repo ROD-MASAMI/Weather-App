@@ -1,9 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View,Button } from 'react-native';
-import HomeScreen from './App/screens/HomeScreen';
+import { AuthProvider } from './App/context/AuthContext';
 import Rod from './App/routes/WelcomeStack';
 export default function App() {
-  return <HomeScreen></HomeScreen>
+
+  return(
+    <AuthProvider>
+<Rod></Rod>
+</AuthProvider>
+  ) 
 }
 
 const styles = StyleSheet.create({

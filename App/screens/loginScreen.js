@@ -1,22 +1,50 @@
 import { StatusBar } from 'expo-status-bar';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, {useEffect, useState, useContext} from 'react';
+import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { AuthContext } from '../context/AuthContext';
+import axios from 'axios';
 
- function LoginScreen({navigation}) {
+
+ function LoginScreen ({navigation}) {
   
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+  const[info, setInfo] = useContext(AuthContext);
   const [password, setPassword] = useState('');
+  const [successMessage, setSuccess] = useState('');
 
+ const onLogin = (email, password) =>{
+
+    if(!email || !password){
+        alert("Please enter all  fields")
+      }
+      else{
+       axios.post('https://349c-197-250-194-228.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
+         if(response.data.status){
+           setInfo(response.data);
+          alert(response.data.message);
+         
+         }
+         else{
+           alert(response.data.message)
+         }
+         
+       }).catch(error => console.log(error))
+      }
+
+ }
   
   return (
     <TouchableWithoutFeedback onPress={()=>{
       Keyboard.dismiss();
     }}>
             <View style={styles.container}>
+            
       <Text style={[styles.title, styles.leftTitle]}>Sign In</Text>
+    
       <View style={styles.InputContainer}>
+      
         <TextInput
           style={styles.body}
           keyboardType='email-address'
@@ -41,7 +69,7 @@ import { TouchableOpacity } from 'react-native';
       <Button
         
         style={styles.loginText}
-        onPress={() => onPressLogin()}
+        onPress={() =>onLogin(email, password)}
         title="Log in"
         >
       </Button>
@@ -53,7 +81,12 @@ import { TouchableOpacity } from 'react-native';
       
       
     </View>
+
+    
+
  </TouchableWithoutFeedback>
+
+
 
   );
 }

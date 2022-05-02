@@ -1,14 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, SafeAreaView,ScrollView, FlatList, View,Button, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, Image, Dimensions} from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useContext, useState, useCallback} from 'react';
 import COLORS from '../consts/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import houses from '../consts/houses';
 import axios, { Axios } from 'axios';
+import { AuthContext } from '../context/AuthContext';
 const {width} = Dimensions.get('screen');
 const ITEM_HEIGHT = 250;
-const HomeScreen = () =>{
+const HomeScreen = ({navigation, route}) =>{
+
+    const [info, setInfo] = useContext(AuthContext);
+
     const getItemLayout = useCallback(
         (data, index) =>({
             length: ITEM_HEIGHT,
@@ -17,6 +21,8 @@ const HomeScreen = () =>{
         }),
         []
     );
+
+    
 
      const Categories = () =>{
          const [selectedIndex, setSelectedIndex]= React.useState(
@@ -44,7 +50,7 @@ const HomeScreen = () =>{
                <Text style={{fontSize: 16, fontWeight: 'bold'}}>{item.title}</Text>
                <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.blue}}>{item.price}</Text>
               </View>
-              <Text style={{color:COLORS.grey, fontSize: 14, marginTop: 5}}>{item.location}</Text>
+              <Text style={{color:'grey', fontSize: 14, marginTop: 5}}>{item.location}</Text>
          <View style={{marginTop:10, flexDirection: 'row'}}>
              <View style={styles.facility}>
              <FontAwesome name="bed" size={18} color="black" />
@@ -67,14 +73,17 @@ const HomeScreen = () =>{
         Keyboard.dismiss();
       }}>
          
-     <SafeAreaView style={{backgroundColor: 'lightgrey', flex: 1,}}>
+     <SafeAreaView style={{backgroundColor: '#778899', flex: 1,}}>
 
 <View style={styles.header}>
 <View>
-    <Text style={{color:'grey'}}>WELCOME</Text>
-    <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>RODNEY</Text>
+    <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>WELCOME</Text>
+    <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>{info.user.Fullname}</Text>
 </View>
+<TouchableOpacity onPress={()=> navigation.navigate('UserProfile')}>
 <Image source={require('../assets/person.jpeg')} style={styles.profile}/>
+<Text>PROFILE</Text>
+</TouchableOpacity>
 </View>
 <View style={{marginTop: 25,}}>
     <View 
@@ -92,16 +101,17 @@ const HomeScreen = () =>{
            </View>
        </View>
        <Categories />
-       
-       
+         
 </View>
+    
 <FlatList
        contentContainerStyle={{paddingBottom: 20, paddingVertical: 20, paddingLeft: 20,}} 
        vertical={true}
        data={houses}
        getItemLayout={getItemLayout}
        renderItem={Card}           
-       />
+       />      
+   
  </SafeAreaView>
  </TouchableWithoutFeedback>
  );
@@ -114,7 +124,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
-        borderWidth: 0.5,
+       // borderWidth: 0.5,
+       
+        
         
     },
     profile:{
@@ -177,7 +189,7 @@ const styles = StyleSheet.create({
     },
     facilityText:{
         marginLeft: 5,
-        color: COLORS.grey,
+        color: 'grey',
 
     }
 });
