@@ -5,13 +5,30 @@ import COLORS from '../consts/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import houses from '../consts/houses';
+import SearchDrop from './SearchDrop';
 import axios, { Axios } from 'axios';
 import { AuthContext } from '../context/AuthContext';
 const {width} = Dimensions.get('screen');
 const ITEM_HEIGHT = 250;
 const HomeScreen = ({navigation, route}) =>{
-
+    
     const [info, setInfo] = useContext(AuthContext);
+    const [filtered, setFiltered] = useState([]);
+    const [searching, setSearching] = useState(false);
+    const onSearch = (text) => {
+        if(text){
+        setSearching(true)
+        const temp =text.toLowerCase()
+        const tempList = houses.filter(item =>{
+            if(item.title.match(temp))
+            return item
+        })
+        setFiltered(tempList);
+        } else{
+            setSearching(false)
+            
+        }
+    }
 
     const getItemLayout = useCallback(
         (data, index) =>({
@@ -40,7 +57,9 @@ const HomeScreen = ({navigation, route}) =>{
      };
 
      const Card = ({item}) =>{
-         return (<View style={styles.card}>
+         return (
+         <TouchableOpacity onPress={() => navigation.navigate('HouseDetail', item)}>
+         <View style={styles.card}>
              <Image source={item.image} style={styles.cardImage} />
              <View style={{
                  flexDirection: 'row',
@@ -66,6 +85,7 @@ const HomeScreen = ({navigation, route}) =>{
              </View>
          </View>
          </View>
+         </TouchableOpacity>
          );
      };
  return(
@@ -82,7 +102,9 @@ const HomeScreen = ({navigation, route}) =>{
 </View>
 <TouchableOpacity onPress={()=> navigation.navigate('UserProfile')}>
 <Image source={require('../assets/person.jpeg')} style={styles.profile}/>
-<Text>PROFILE</Text>
+<Text>PROFILE
+
+</Text>
 </TouchableOpacity>
 </View>
 <View style={{marginTop: 25,}}>
@@ -94,16 +116,19 @@ const HomeScreen = ({navigation, route}) =>{
        }}>
            <View style={styles.search}>
            <MaterialIcons name="search" size={25} color={COLORS.grey} />
-           <TextInput style={{paddingBottom:15, paddingLeft:10}} placeholder='search address, city, location'/>
+           <TextInput style={{paddingBottom:15, paddingLeft:10}} placeholder='search address, city, location' onChangeText={onSearch}/>
            </View>
            <View style={styles.sortBtn}>
            <MaterialIcons name="tune" size={25} color={COLORS.white} />
            </View>
        </View>
-       <Categories />
+       
          
 </View>
-    
+    {
+        searching ? (<SearchDrop
+        filtered ={filtered}/>)
+    :(
 <FlatList
        contentContainerStyle={{paddingBottom: 20, paddingVertical: 20, paddingLeft: 20,}} 
        vertical={true}
@@ -111,7 +136,9 @@ const HomeScreen = ({navigation, route}) =>{
        getItemLayout={getItemLayout}
        renderItem={Card}           
        />      
-   
+    )}
+
+    
  </SafeAreaView>
  </TouchableWithoutFeedback>
  );

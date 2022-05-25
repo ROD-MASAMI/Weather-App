@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard, Alert, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import { TouchableOpacity } from 'react-native';
 import axios, { Axios } from 'axios';
@@ -17,8 +17,16 @@ const onRegister = (name, type, phone, email, password) => {
 if(!email && !name)
 alert(email)
 else{
-  axios.post('https://349c-197-250-194-228.eu.ngrok.io/api/register',{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
-    console.log(response.message)
+  axios.post('https://7254-197-250-230-61.eu.ngrok.io/api/register',{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
+    if(response.data.status){
+      Alert.alert('ALERT', response.data.message, [
+        {text: 'LOGIN', onPress: () => navigation.navigate('LoginScreen')},
+        {text: 'OK'}
+      ]);
+    } 
+    else{
+         alert(response.data.message)
+    }
   }).catch(error => console.log(error))
   
 }
@@ -30,10 +38,9 @@ else{
     <TouchableWithoutFeedback onPress={()=>{
       Keyboard.dismiss();
     }}>
+      <ScrollView>
      <View style={styles.container}>
-        <TouchableOpacity  onPress={() => navigation.popToTop()}>
-            <Text style={styles.registerText}>HOME</Text>
-            </TouchableOpacity>
+      
      <Text style={[styles.title, styles.leftTitle]}>Sign In</Text>
 
      <View style={styles.InputContainer}>
@@ -42,7 +49,7 @@ else{
          placeholder="Full-Name "
          onChangeText={setName}
          value={name}
-         placeholderTextColor={"black"}
+         placeholderTextColor={"grey"}
          underlineColorAndroid="transparent"
        />
      </View>
@@ -92,13 +99,11 @@ else{
          underlineColorAndroid="transparent"
        />
      </View>
-     <Button
-       
-       style={styles.loginText}
-       onPress={() =>onRegister(name, type, phone, email, password)}
-       title="Register"
-       >
-     </Button>
+
+     <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() =>onRegister(name, type, phone, email, password)}>
+            <Text style={styles.loginText}>REGISTER</Text>
+          </TouchableOpacity>
+  
 
      <Text>Already registered?</Text>
      <TouchableOpacity onPress={()=> navigation.navigate('LoginScreen')}>
@@ -106,6 +111,7 @@ else{
       </TouchableOpacity>
 
    </View>
+   </ScrollView>
    </TouchableWithoutFeedback>
 
  );
@@ -162,7 +168,7 @@ const styles = StyleSheet.create({
  },
  InputContainer: {
    width: "80%",
-   marginTop: 30,
+   marginBottom: 20,
    borderWidth: 1,
    borderStyle: 'solid',
    borderColor: "grey",
@@ -174,6 +180,24 @@ const styles = StyleSheet.create({
    paddingRight: 20,
    color: "black",
  },
+ buttonContainer: {
+   height:45,
+   flexDirection: 'row',
+   justifyContent: 'center',
+   alignItems: 'center',
+   marginBottom:20,
+   width:300,
+   borderRadius:30,
+   backgroundColor:'transparent'
+ },
+ loginButton: {
+   backgroundColor: "#00b5ec",
+   shadowColor: "#808080",
+   shadowOffset: {
+     width: 0,
+     height: 9,
+   }
+ }
 
 });
 

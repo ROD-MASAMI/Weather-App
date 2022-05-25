@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createNavigationContainerRef, StackActions } from "@react-navigation/native";
 import Welcome from "../screens/welcome";
 import { NavigationContainer } from "@react-navigation/native";
+import SearchDrop from '../screens/SearchDrop';
+import HouseDetail from '../screens/HouseDetail';
 import HomeScreen from "../screens/HomeScreen";
 import AdminHome from '../screens/AdminHome';
 import UserProfile from '../screens/userProfile';
@@ -56,6 +58,21 @@ function Rod(){
                         headerShown: false,
                     }}
                     />
+                    <Stack.Screen
+                    name="HouseDetail"
+                    component={HouseDetail}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+                    <Stack.Screen
+                    name="SearchDrop"
+                    component={SearchDrop}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+
 
            </>         
     ):(

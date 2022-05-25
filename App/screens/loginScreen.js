@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, useContext} from 'react';
-import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard, ActivityIndicator,} from 'react-native';
 import { TouchableOpacity } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 
@@ -14,23 +15,32 @@ import axios from 'axios';
   const [password, setPassword] = useState('');
   const [successMessage, setSuccess] = useState('');
 
- const onLogin = (email, password) =>{
-
+ const onLogin =  (email, password) =>{
+   
+  setLoading(true);
+  
     if(!email || !password){
         alert("Please enter all  fields")
+        
+        setLoading(false);
+        
       }
       else{
-       axios.post('https://349c-197-250-194-228.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
+       axios.post('https://7254-197-250-230-61.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
          if(response.data.status){
            setInfo(response.data);
-          alert(response.data.message);
-         
+          setLoading(false);
+          
          }
          else{
+           setLoading(false);
+           
            alert(response.data.message)
          }
          
-       }).catch(error => console.log(error))
+       }).catch(error => alert(error));
+        setLoading(false);
+        
       }
 
  }
@@ -39,8 +49,9 @@ import axios from 'axios';
     <TouchableWithoutFeedback onPress={()=>{
       Keyboard.dismiss();
     }}>
+       
             <View style={styles.container}>
-            
+           
       <Text style={[styles.title, styles.leftTitle]}>Sign In</Text>
     
       <View style={styles.InputContainer}>
@@ -66,14 +77,18 @@ import axios from 'axios';
           underlineColorAndroid="transparent"
         />
       </View>
-      <Button
-        
-        style={styles.loginText}
-        onPress={() =>onLogin(email, password)}
-        title="Log in"
-        >
-      </Button>
-
+      {loading ? (
+         
+          <ActivityIndicator
+             size={'large'}
+             
+          />) : (
+            <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => onLogin(email, password)}>
+            <Text style={styles.loginText}>LOGIN</Text>
+          </TouchableOpacity>
+          )}
+     
+      
       <Text>Don't Have An Account?</Text>
       <TouchableOpacity onPress={()=> navigation.navigate('RegisterScreen')}>
        <Text style={styles.registerText}>REGISTER HERE</Text>
@@ -81,7 +96,7 @@ import axios from 'axios';
       
       
     </View>
-
+            
     
 
  </TouchableWithoutFeedback>
@@ -133,6 +148,8 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: "white",
+    fontWeight: 'bold',
+
   },
   registerText:{
     color: '#4ecdc4',
@@ -142,7 +159,7 @@ const styles = StyleSheet.create({
   },
   InputContainer: {
     width: "80%",
-    marginTop: 30,
+    marginBottom: 25,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: "grey",
@@ -154,6 +171,24 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     color: "#696969",
   },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:300,
+    borderRadius:30,
+    backgroundColor:'transparent'
+  },
+  loginButton: {
+    backgroundColor: "#00b5ec",
+    shadowColor: "#808080",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    }
+  }
 
 });
 
