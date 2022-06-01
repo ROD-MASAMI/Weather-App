@@ -125,6 +125,7 @@ const HomeScreen = ({navigation, route}) =>{
        
          
 </View>
+
     {
         searching ? (<SearchDrop
         filtered ={filtered}/>)
@@ -138,8 +139,9 @@ const HomeScreen = ({navigation, route}) =>{
        />      
     )}
 
-    
+
  </SafeAreaView>
+ 
  </TouchableWithoutFeedback>
  );
 };

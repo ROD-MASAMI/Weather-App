@@ -17,29 +17,27 @@ import axios from 'axios';
 
  const onLogin =  (email, password) =>{
    
-  setLoading(true);
+  
   
     if(!email || !password){
         alert("Please enter all  fields")
         
-        setLoading(false);
-        
       }
       else{
-       axios.post('https://7254-197-250-230-61.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
+       axios.post('https://6aec-41-59-49-59.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
          if(response.data.status){
            setInfo(response.data);
-          setLoading(false);
+          
           
          }
          else{
-           setLoading(false);
+           
            
            alert(response.data.message)
          }
          
        }).catch(error => alert(error));
-        setLoading(false);
+        
         
       }
 

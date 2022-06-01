@@ -4,6 +4,8 @@ import { createNavigationContainerRef, StackActions } from "@react-navigation/na
 import Welcome from "../screens/welcome";
 import { NavigationContainer } from "@react-navigation/native";
 import SearchDrop from '../screens/SearchDrop';
+import Tabs from './tabs';
+import EditUser from '../screens/EditUser';
 import HouseDetail from '../screens/HouseDetail';
 import HomeScreen from "../screens/HomeScreen";
 import AdminHome from '../screens/AdminHome';
@@ -44,8 +46,8 @@ function Rod(){
                  (!info.token =='') && info.user.role =='1' ? (
           <>
                     <Stack.Screen
-                    name="HomeScreen"
-                    component={HomeScreen}
+                    name="Tabs"
+                    component={Tabs}
                     options ={{
                         headerShown: false,
                     }}
@@ -58,6 +60,15 @@ function Rod(){
                         headerShown: false,
                     }}
                     />
+
+                     <Stack.Screen
+                    name="EditUser"
+                    component={EditUser}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+
                     <Stack.Screen
                     name="HouseDetail"
                     component={HouseDetail}

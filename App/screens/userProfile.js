@@ -1,6 +1,7 @@
 import React, { Component, useContext } from 'react';
 import COLORS from '../consts/colors';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
@@ -12,6 +13,7 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
+import EditUser from './EditUser';
 
 function UserProfile({navigation}) {
   const log = {
@@ -39,17 +41,21 @@ function UserProfile({navigation}) {
           <View style={styles.headerBtn}>
               <EvilIcons name="arrow-left" size={30} color="black"  onPress={navigation.goBack}/>
               </View>
+              
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
                  source={require('../assets/person.jpeg')}/>
 
                 <Text style={styles.name}>{info.user.Fullname}</Text>
-                <Text style={styles.userInfo}>{info.user.email} </Text>
-                <Text style={styles.userInfo}>DAR ES SALAAM </Text>
+                
             </View>
           </View>
 
           <View style={styles.body}>
+          <TouchableOpacity style={styles.editText} onPress={()=> navigation.navigate('EditUser')}>
+                <MaterialIcons name="edit" size={24} color="black" />
+                <Text style={{fontSize: 25,}}>EDIT DETAILS</Text>
+                </TouchableOpacity>
             <View style={styles.item}>           
               <FontAwesome name="phone" size={24} color="black" />       
                 <Text style={{color: "#FFFFFF", paddingLeft: 15, paddingTop: 5, fontSize: 18}}>{info.user.phone_no}</Text>
@@ -82,6 +88,14 @@ function UserProfile({navigation}) {
 const styles = StyleSheet.create({
   header:{
     backgroundColor: "#DCDCDC",
+    
+  },
+  editText:{
+    flexDirection: 'row',
+    paddingLeft: 90,
+    marginBottom: 30,
+    alignItems: 'center',
+    
   },
   headerBtn: {
     height: 50,
@@ -117,7 +131,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#778899",
     height:500,
     paddingTop: 15,
-    paddingLeft: 15
+    paddingLeft: 15,
+    
   },
   item:{
     flexDirection : 'row',

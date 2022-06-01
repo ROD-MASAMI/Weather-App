@@ -8,7 +8,7 @@
     "splash": {
       "image": "./App/assets/HOUSE.jpg",
       "resizeMode": "contain",
-      "backgroundColor": "#DCDCDC"
+      "backgroundColor": "#FFF"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
