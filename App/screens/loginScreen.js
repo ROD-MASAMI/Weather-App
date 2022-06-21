@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, useContext} from 'react';
 import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard, ActivityIndicator,} from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import baseURL from '../consts/baseURL';
 import { AuthContext } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -24,7 +25,7 @@ import axios from 'axios';
         
       }
       else{
-       axios.post('https://6aec-41-59-49-59.eu.ngrok.io/api/login',{email:email, password:password}).then(response =>{
+       axios.post(`${baseURL}login`,{email:email, password:password}).then(response =>{
          if(response.data.status){
            setInfo(response.data);
           

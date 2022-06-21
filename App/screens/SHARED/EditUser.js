@@ -1,12 +1,13 @@
 import React, { Component, useContext, useState } from 'react';
-import COLORS from '../consts/colors';
+import COLORS from '../../consts/colors';
+import baseURL from '../../consts/baseURL';
 import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import axios from 'axios';
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from '../../context/AuthContext';
 import {
   StyleSheet,
   Text,
@@ -29,7 +30,7 @@ function EditUser({navigation}) {
 
     const onEdit = (name, location, phone, mail, id) => {
     
-        axios.put('https://6aec-41-59-49-59.eu.ngrok.io/api/editUser',{name:name, location:location, phone:phone, email:mail, id:id}).then(response =>{
+        axios.put(`${baseURL}editUser`,{name:name, location:location, phone:phone, email:mail, id:id}).then(response =>{
           if(response.data.status){
             Alert.alert('ALERT', response.data.message, [
               {text: 'OK', onPress: () => navigation.navigate('userProfile')},
@@ -57,7 +58,7 @@ function EditUser({navigation}) {
               </View>
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
-                 source={require('../assets/person.jpeg')}/>
+                 source={require('../../assets/person.jpeg')}/>
 
             </View>
           </View>

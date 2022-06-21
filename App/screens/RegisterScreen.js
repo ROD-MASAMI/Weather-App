@@ -2,12 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View,Button, TextInput, TouchableWithoutFeedback, Keyboard, Alert, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import { TouchableOpacity } from 'react-native';
-import {Links} from '../consts/Links';
+import baseURL from '../consts/baseURL';
 import axios, { Axios } from 'axios';
  function RegisterScreen({navigation}) {
 
   const [loading, setLoading] = useState(false);
-  const[url, setUrl] = Links.url;
+  
   const [name, setName] = useState('');
   const [type, setType] = useState('');
   const [phone, setPhone] = useState('');
@@ -18,7 +18,7 @@ const onRegister = (name, type, phone, email, password) => {
 if(!email && !name)
 alert('please fill out all details')
 else{ 
-  axios.post('https://6aec-41-59-49-59.eu.ngrok.io/api/register',{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
+  axios.post(`${baseURL}register`,{name:name, type:type, phone:phone, email:email, password:password}).then(response =>{
     if(response.data.status){
       Alert.alert('ALERT', response.data.message, [
         {text: 'LOGIN', onPress: () => navigation.navigate('LoginScreen')},

@@ -1,12 +1,10 @@
 import {StyleSheet, Text, SafeAreaView,ScrollView, FlatList, View,Button, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, Image, Dimensions} from 'react-native';
 import React, {useContext, useState, useCallback} from 'react';
-import COLORS from '../consts/colors';
+import COLORS from '../../consts/colors';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import houses from '../consts/houses';
 import axios, { Axios } from 'axios';
-import { AuthContext } from '../context/AuthContext';
 const {width} = Dimensions.get('screen');
 const ITEM_HEIGHT = 250;
 
@@ -24,20 +22,20 @@ const ITEM_HEIGHT = 250;
         return (
         <TouchableOpacity onPress={() => navigation.navigate('HouseDetail', item)}>
         <View style={styles.card}>
-            <Image source={item.image} style={styles.cardImage} />
+        <Image source={require('../../assets/house3.jpg')} style={styles.cardImage} />
             <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 marginTop: 10,
             }}>  
               <Text style={{fontSize: 16, fontWeight: 'bold'}}>{item.title}</Text>
-              <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.blue}}>{item.price}</Text>
+              <Text style={{fontSize: 16, fontWeight: 'bold', color: COLORS.blue}}>${item.price}</Text>
              </View>
              <Text style={{color:'grey', fontSize: 14, marginTop: 5}}>{item.location}</Text>
         <View style={{marginTop:10, flexDirection: 'row'}}>
             <View style={styles.facility}>
             <FontAwesome name="bed" size={18} color="black" />
-            <Text style={styles.facilityText}>{item.bedroom}</Text>
+            <Text style={styles.facilityText}>{item.Rooms}</Text>
             </View>
             <View style={styles.facility}>
             <FontAwesome name="bathtub" size={18} color="black" />
@@ -59,6 +57,7 @@ const ITEM_HEIGHT = 250;
        contentContainerStyle={{paddingBottom: 20, paddingVertical: 20, paddingLeft: 20,}} 
        vertical={true}
        data={filtered}
+       keyExtractor={(item) => item.house_id}
        getItemLayout={getItemLayout}
        renderItem={Card}           
        /> 

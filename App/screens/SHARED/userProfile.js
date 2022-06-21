@@ -1,11 +1,11 @@
 import React, { Component, useContext } from 'react';
-import COLORS from '../consts/colors';
+import COLORS from '../../consts/colors';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 import {
   StyleSheet,
   Text,
@@ -44,7 +44,7 @@ function UserProfile({navigation}) {
               
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
-                 source={require('../assets/person.jpeg')}/>
+                 source={require('../../assets/person.jpeg')}/>
 
                 <Text style={styles.name}>{info.user.Fullname}</Text>
                 

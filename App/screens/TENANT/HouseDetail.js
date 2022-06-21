@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   ImageBackground,
   SafeAreaView,
   View,
   Text,
+  Alert,
+  TouchableOpacity,
   StyleSheet,
   FlatList,
   Image,
@@ -12,23 +14,46 @@ import {
 } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { AuthContext } from '../../context/AuthContext';
+import axios, { Axios } from 'axios';
+import baseURL from '../../consts/baseURL';
 import { MaterialIcons } from '@expo/vector-icons';
-import COLORS from '../consts/colors';
+import COLORS from '../../consts/colors';
 const {width} = Dimensions.get('screen');
 const HouseDetail = ({navigation, route}) => {
+
   const houses = route.params;
+  const [info, setInfo] = useContext(AuthContext);
+  const[hID, setHID] = useState(houses.house_id);
+  const[lID, setLID] = useState(houses.landlord_id);
+  const[uID, setUID] = useState(info.user.id);
 
   const InteriorCard = ({interior}) => {
     return <Image source={interior} style={style.interiorImage} />;
   };
 
+   const book = (hID, lID, uID) => {
+    axios.post(`${baseURL}book`,{house_id:hID, landlord_id:lID, user_id:uID}).then(response =>{
+      if(response.data.status){
+        Alert.alert('ALERT', response.data.message, [
+          {text: 'OK', onPress: () => navigation.goBack},
+        ]);
+      } 
+      else{
+           alert(response.data.message)
+      }
+    }).catch(error => console.log(error))
+    
+  
+   }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* House image */}
-
+        
         <View style={style.backgroundImageContainer}>
-          <ImageBackground style={style.backgroundImage} source={houses.image}>
+          <ImageBackground style={style.backgroundImage} source={require('../../assets/house3.jpg')}>
             <View style={style.header}>
               <View style={style.headerBtn}>
               <EvilIcons name="arrow-left" size={30} color="black"  onPress={navigation.goBack}/>
@@ -68,7 +93,7 @@ const HouseDetail = ({navigation, route}) => {
           <View style={{flexDirection: 'row', marginTop: 20}}>
             <View style={style.facility}>
             <FontAwesome name="bed" size={18} color="black" />
-              <Text style={style.facilityText}>{houses.bedroom}</Text>
+              <Text style={style.facilityText}>{houses.Rooms}</Text>
             </View>
             <View style={style.facility}>
             <FontAwesome name="bathtub" size={18} color="black" />
@@ -98,16 +123,24 @@ const HouseDetail = ({navigation, route}) => {
             <View>
               <Text
                 style={{color: COLORS.blue, fontWeight: 'bold', fontSize: 18}}>
-                {houses.price}
+                ${houses.price}
               </Text>
               <Text
                 style={{fontSize: 12, color: COLORS.grey, fontWeight: 'bold'}}>
                 Total Price
               </Text>
             </View>
+            {info.user.role =='1' ? (
+            <TouchableOpacity onPress={() =>book(hID, lID, uID)}>
             <View style={style.bookNowBtn}>
               <Text style={{color: COLORS.white}}>Book Now</Text>
             </View>
+            </TouchableOpacity>
+            ) :(<TouchableOpacity>
+            <View style={style.bookNowBtn}>
+              <Text ></Text>
+            </View>
+            </TouchableOpacity>)}
           </View>
         </View>
       </ScrollView>

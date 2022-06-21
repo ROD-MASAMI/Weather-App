@@ -3,13 +3,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createNavigationContainerRef, StackActions } from "@react-navigation/native";
 import Welcome from "../screens/welcome";
 import { NavigationContainer } from "@react-navigation/native";
-import SearchDrop from '../screens/SearchDrop';
+import SearchDrop from '../screens/SHARED/SearchDrop';
 import Tabs from './tabs';
-import EditUser from '../screens/EditUser';
-import HouseDetail from '../screens/HouseDetail';
-import HomeScreen from "../screens/HomeScreen";
-import AdminHome from '../screens/AdminHome';
-import UserProfile from '../screens/userProfile';
+import AdminTabs from './AdminTabs';
+import EditUser from '../screens/SHARED/EditUser';
+import HouseDetail from '../screens/TENANT/HouseDetail';
+import HomeScreen from "../screens/TENANT/HomeScreen";
+import AdminHome from '../screens/ADMIN/AdminHome';
+import UserProfile from '../screens/SHARED/userProfile';
 import { AuthContext } from "../context/AuthContext";
 import LoginScreen from "../screens/loginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
@@ -88,13 +89,29 @@ function Rod(){
            </>         
     ):(
         <>
-        <Stack.Screen
+          <Stack.Screen
         name="AdminHome"
-        component={AdminHome}
+        component={AdminTabs}
         options ={{
             headerShown: false,
         }}
         />
+
+               <Stack.Screen
+                    name="UserProfile"
+                    component={UserProfile}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+
+                    <Stack.Screen
+                    name="HouseDetail"
+                    component={HouseDetail}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
 
 </> 
     )}
