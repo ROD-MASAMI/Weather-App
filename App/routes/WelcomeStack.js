@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SearchDrop from '../screens/SHARED/SearchDrop';
 import Tabs from './tabs';
 import AdminTabs from './AdminTabs';
+import OrderDetail from '../screens/ADMIN/orderDetail';
 import EditUser from '../screens/SHARED/EditUser';
 import HouseDetail from '../screens/TENANT/HouseDetail';
 import HomeScreen from "../screens/TENANT/HomeScreen";
@@ -108,6 +109,14 @@ function Rod(){
                     <Stack.Screen
                     name="HouseDetail"
                     component={HouseDetail}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+
+             <Stack.Screen
+                    name="OrderDetail"
+                    component={OrderDetail}
                     options ={{
                         headerShown: false,
                     }}

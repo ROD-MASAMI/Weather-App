@@ -12,13 +12,13 @@ const ITEM_HEIGHT = 250;
 const Orders = ({navigation, route}) =>{
     
     const [info, setInfo] = useContext(AuthContext);
-    const [orders, setOrders] = useState();
-    const[length, setLength] = useState();
+    const [orders, setOrders] = useState({});
+    
     
    
     const Card = ({item}) =>{
         return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('OrderDetail', item)}>
 <View style={styles.card}>
                    <Image
                       style={styles.image}
@@ -48,8 +48,6 @@ const Orders = ({navigation, route}) =>{
         axios.get(`${baseURL}orders/${info.user.id}`).then(response =>{
             if(!(response == '')){
               setOrders(response.data);
-              setLength(orders.length)
-
             }
             
           }).catch(error => alert(error));
@@ -63,12 +61,12 @@ const Orders = ({navigation, route}) =>{
      <SafeAreaView style={{backgroundColor: '#778899', flex: 1,}}>
            <View style={styles.editText}>
            <Text style={{fontSize: 25,}}>MY ORDERS</Text>
-           <Text>{length}</Text>
+           <Text  style={{fontSize: 25,}}>({orders.length})</Text>
                </View>    
      <FlatList
        contentContainerStyle={{padding:20}} 
        vertical={true} 
-       data={orders}
+       data={orders.order}
        keyExtractor={(item) => item.REF_NO}
        renderItem={Card}           
        /> 
