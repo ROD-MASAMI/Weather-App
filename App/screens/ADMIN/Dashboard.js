@@ -13,9 +13,10 @@ const ITEM_HEIGHT = 250;
 const Dashboard = ({navigation, route}) =>{
     
     const [info, setInfo] = useContext(AuthContext);
+    const[listTenants, setListTenants] = useState({});
     const [Tenants, setTenants] = useState({
         title: 'Tenants',
-        figure: '10',
+        figure: 1,
         color: 'lightgreen'
     }); 
     const [complaints, setComplaints] = useState({
@@ -28,22 +29,8 @@ const Dashboard = ({navigation, route}) =>{
         figure: '10',
         color: 'red',
     });
-    const [crib, setCrib] = useState();
-    const [searching, setSearching] = useState(false);
-    const onSearch = (text) => {
-        if(text){
-        setSearching(true)
-        const temp =text.toLowerCase()
-        const tempList = crib.filter(item =>{
-            if(item.title.match(temp))
-            return item
-        })
-        setFiltered(tempList);
-        } else{
-            setSearching(false)
-            
-        }
-    }
+    
+
 
     const Card = ({item}) =>{
         return (
@@ -58,19 +45,51 @@ const Dashboard = ({navigation, route}) =>{
         </TouchableOpacity>
         
         );
-    };    
+    };   
+    
+    const Tenant = () =>{
+        return(
+            <View style={{ flexDirection: 'row', marginLeft:10, marginTop:1}}>
+<View style={{ width: 100, backgroundColor: 'lightyellow'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>NAME</Text>
+</View>
+<View style={{ width: 100, backgroundColor: 'lavender'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>HOUSE</Text>
+</View>
+<View style={{ width: 100, backgroundColor: 'lightblue'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>STATUS</Text>
+</View>
+</View>
+        );
+    }
+    const tenantCard = ({item}) =>{
+        return(
+            <View style={{ flexDirection: 'row', marginLeft:10, marginTop:1}}>
+<View style={{ width: 100, backgroundColor: 'lightyellow'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>{item.Fullname}</Text>
+</View>
+<View style={{ width: 100, backgroundColor: 'lavender'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>{item.HOUSE_NAME}</Text>
+</View>
+<View style={{ width: 100, backgroundColor: 'lightblue'}}>
+<Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>{item.STATUS}</Text>
+</View>
+</View>
+        );
+    }
 
 
 
     
-   /*  useEffect(() =>{
-        axios.get(`${baseURL}Houses/${info.user.id}`).then(response =>{
+     useEffect(() =>{
+        axios.get(`${baseURL}tenant/${info.user.id}`).then(response =>{
             if(!(response == '')){
-              setCrib(response.data);
+                setListTenants(response.data);
+                
             }
             
           }).catch(error => alert(error));
-    }, [])*/
+    }, [])
 
  return(
     <TouchableWithoutFeedback onPress={()=>{
@@ -86,11 +105,10 @@ const Dashboard = ({navigation, route}) =>{
 </View>
 <TouchableOpacity onPress={()=> navigation.navigate('UserProfile')}>
 <Image source={require('../../assets/person.jpeg')} style={styles.profile}/>
-<Text>PROFILE
-
-</Text>
+<Text>PROFILE</Text>
 </TouchableOpacity>
 </View>
+<View>
 <ScrollView style={{marginTop: 10, flexDirection:'row'}} horizontal={true}>
     <Card item = {Tenants}/>
     <Card item = {complaints}/>
@@ -98,8 +116,16 @@ const Dashboard = ({navigation, route}) =>{
          
 </ScrollView>
  
-     
-    
+<Tenant/>
+<FlatList
+      
+       vertical={true} 
+       data={listTenants.tenants}
+       keyExtractor={(item) => item.REF}
+       renderItem={tenantCard}           
+       /> 
+
+</View>
 
 
  </SafeAreaView>

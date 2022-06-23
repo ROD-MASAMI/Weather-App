@@ -1,7 +1,7 @@
 import { Platform } from 'react-native'
 
 
-let baseURL = 'https://bf93-41-59-49-113.in.ngrok.io/api/';
+let baseURL = 'https://5e6d-41-59-49-187.eu.ngrok.io/api/';
 
 
 

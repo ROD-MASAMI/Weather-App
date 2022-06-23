@@ -2,6 +2,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../screens/TENANT/HomeScreen';
 import UserProfile from '../screens/SHARED/userProfile';
+import TenantOrders from '../screens/TENANT/tenantOrders';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
@@ -14,13 +16,20 @@ const Tabs = () => {
                 component={HomeScreen}
                 options ={{
                     headerShown: false,
+                    tabBarIcon: ({color}) =>(
+                        <MaterialIcons name="house" size={24} color="black" />
+                    )
+                
                 }}                
             />
             <Tab.Screen
-                name ="userProfile"
-                component={UserProfile}
+                name ="orders"
+                component={TenantOrders}
                 options ={{
                     headerShown: false,
+                    tabBarIcon: ({color}) => (
+                        <FontAwesome name="reorder" size={24} color="black" />
+                        )
                 }}                
             />
             

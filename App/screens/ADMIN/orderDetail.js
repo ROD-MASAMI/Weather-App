@@ -4,7 +4,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import DatePicker from '@react-native-date-picker';
 import { EvilIcons } from '@expo/vector-icons';
 import { AuthContext } from "../../context/AuthContext";
 import baseURL from '../../consts/baseURL';
@@ -23,20 +22,22 @@ import {
 } from 'react-native';
 function OrderDetail({navigation, route}) {
   
-    
+  const order = route.params;
     const [Duration, setDuration] = useState('');
     const [MonthlyRent, setMonthlyRent] = useState('');
     const TotalRent = MonthlyRent * Duration;
     const [Deposit, setDeposit] = useState('');
     const [StartDate, setStartDate] = useState('');
     const [EndDate, setEndDate] = useState('');
+    const [uid, setUid] = useState(order.id);
+    const[lid, setLid] = useState(order.landlord_id)
+    const [title, setTitle] = useState(order.title);
+    const[hid, setHid] = useState(order.house_id);
     const [info, setInfo] = useContext(AuthContext);
     const [contract, setContract] = useState('');
-    const [sdate, setSdate] = useState(new Date());
-    const[edate, setEdate] = useState(new Date());
-  const [sopen, setSopen] = useState(false);
-  const[eopen, setEopen] = useState(false);
-    const order = route.params;
+   
+  
+    
     const accept = () => {
       
       axios.put(`${baseURL}editOrder/${order.REF_NO}`).then(response =>{
@@ -50,10 +51,33 @@ function OrderDetail({navigation, route}) {
         }
       }).catch(error => console.log(error))
     }
+
+    const AddContract = (Duration, MonthlyRent, StartDate, EndDate, TotalRent, Deposit, uid, title, lid, hid) =>{
+  
+  axios.post(`${baseURL}addTenant`,{ Duration:Duration, uid:uid, lid:lid, title:title, MonthlyRent:MonthlyRent, TotalRent:TotalRent, Deposit:Deposit, StartDate:StartDate, EndDate:EndDate, id:uid, house_id:hid}).then(response =>{
+    if(response.data.status){
+      Alert.alert('ALERT', response.data.message, [
+        {text: 'OK'}
+      ]);
+      setContract('registered');
+    } 
+    else{
+         alert(response.data.message)
+    }
+  }).catch(error => alert(error))
+  
+
+    }
    
     return (
       <View style={styles.container}>
-        {(contract == '') && order.STATUS_ == 'pending..' ? (
+        { contract == 'registered' ?(<>
+          <EvilIcons name="arrow-left" size={30} color="black" onPress={navigation.goBack} />
+           <Text>TENANT HAS ALREADY BEEN REGISTERED</Text>
+           </>
+           )
+        
+        :(contract == '') && order.STATUS_ == 'pending..' ? (
           <> <View style={styles.header}>
             <View style={styles.headerBtn}>
               <EvilIcons name="arrow-left" size={30} color="black" onPress={navigation.goBack} />
@@ -141,16 +165,16 @@ function OrderDetail({navigation, route}) {
                         placeholderTextColor = {"black"}
                     />
                     <TextInput style={styles.input} 
-                        placeholder="Start Date" 
+                        placeholder="Start Date(MM-DD-YY)" 
                         name="StartDate"
-                        value={sdate}
+                        value={StartDate}
                         onChangeText={text => setStartDate(text)} 
                         placeholderTextColor = {"black"}   
                     />
                     <TextInput style={styles.input}
-                        placeholder="End Date"
+                        placeholder="End Date(MM-DD-YY)"
                         name="EndDate"
-                        value={edate}
+                        value={EndDate}
                         onChangeText={text => setEndDate(text)}
                         placeholderTextColor = {"black"}
                     />
@@ -161,16 +185,16 @@ function OrderDetail({navigation, route}) {
                         title="Add Contract" 
                         color= '#075e54'
                         accessibilityLabel="Add Contract"
-                      
+                      onPress={() => AddContract(Duration, MonthlyRent, StartDate, EndDate, TotalRent, Deposit, uid, lid, title, hid)}
     
                     />
                     </View>
     
             </View>
             </ScrollView>
-           )
+           ):(<Text></Text>)
 
-           :( <Text>TENANT HAS ALREADY BEEN REGISTERED</Text>)}
+           }
       </View>
     );
   
