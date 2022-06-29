@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, SafeAreaView,ScrollView, FlatList, View,Button, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard, Image, Dimensions} from 'react-native';
 import React, {useContext, useState, useCallback, useEffect} from 'react';
 import COLORS from '../../consts/colors';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import baseURL from '../../consts/baseURL';
 import SearchDrop from '../SHARED/SearchDrop';
@@ -104,9 +104,9 @@ const AdminHome = ({navigation, route}) =>{
            <MaterialIcons name="search" size={25} color={COLORS.grey} />
            <TextInput style={{paddingBottom:15, paddingLeft:10}} placeholder='search address, city, location' onChangeText={onSearch}/>
            </View>
-           <View style={styles.sortBtn}>
-           <MaterialIcons name="tune" size={25} color={COLORS.white} />
-           </View>
+           <TouchableOpacity style={styles.sortBtn}>
+           <AntDesign name="plus" size={24} color="white" />
+           </TouchableOpacity>
        </View>
          
 </View>

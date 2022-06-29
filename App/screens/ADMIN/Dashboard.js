@@ -6,6 +6,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import baseURL from '../../consts/baseURL';
 import SearchDrop from '../SHARED/SearchDrop';
+import Contcard from '../../consts/ContCard';
+import Compcards from '../../consts/Cards';
 import axios, { Axios } from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 const {width} = Dimensions.get('screen');
@@ -14,27 +16,64 @@ const Dashboard = ({navigation, route}) =>{
     
     const [info, setInfo] = useContext(AuthContext);
     const[listTenants, setListTenants] = useState({});
+    const [showTenant, setShowTenant] = useState('tenant');
     const [Tenants, setTenants] = useState({
         title: 'Tenants',
         figure: 1,
-        color: 'lightgreen'
+        color: 'lavender'
     }); 
     const [complaints, setComplaints] = useState({
         title: 'complaints',
         figure: '10',
-        color: '#5f82e6',
+        color: 'lightblue',
     });
     const [maintenance, setMaintenance] = useState({
-        title: 'maintenance',
+        title: 'contracts',
         figure: '10',
-        color: 'red',
+        color: 'lightyellow',
     });
     
-
+const ShowTenant = () =>{
+    setShowTenant('tenant');
+}
+const ShowComplaint = () =>{
+    setShowTenant('complaints');
+}
+const ShowContract = () =>{
+    setShowTenant('contracts');
+}
 
     const Card = ({item}) =>{
         return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => ShowTenant()}>
+<View style={[styles.card,{backgroundColor:item.color}]}>
+                      <View style={styles.wrapText}>
+                          <Text style={styles.fontSize}>{item.title}</Text>
+                          <Text style={styles.fontSize}>{item.figure}</Text>
+                          
+                      </View>
+               </View>
+        </TouchableOpacity>
+        
+        );
+    };
+    const Card2 = ({item}) =>{
+        return (
+        <TouchableOpacity onPress={() => ShowComplaint()}>
+<View style={[styles.card,{backgroundColor:item.color}]}>
+                      <View style={styles.wrapText}>
+                          <Text style={styles.fontSize}>{item.title}</Text>
+                          <Text style={styles.fontSize}>{item.figure}</Text>
+                          
+                      </View>
+               </View>
+        </TouchableOpacity>
+        
+        );
+    };
+    const Card3 = ({item}) =>{
+        return (
+        <TouchableOpacity onPress={() => ShowContract()}>
 <View style={[styles.card,{backgroundColor:item.color}]}>
                       <View style={styles.wrapText}>
                           <Text style={styles.fontSize}>{item.title}</Text>
@@ -50,13 +89,13 @@ const Dashboard = ({navigation, route}) =>{
     const Tenant = () =>{
         return(
             <View style={{ flexDirection: 'row', marginLeft:10, marginTop:1}}>
-<View style={{ width: 100, backgroundColor: 'lightyellow'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>NAME</Text>
 </View>
-<View style={{ width: 100, backgroundColor: 'lavender'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>HOUSE</Text>
 </View>
-<View style={{ width: 100, backgroundColor: 'lightblue'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>STATUS</Text>
 </View>
 </View>
@@ -65,13 +104,13 @@ const Dashboard = ({navigation, route}) =>{
     const tenantCard = ({item}) =>{
         return(
             <View style={{ flexDirection: 'row', marginLeft:10, marginTop:1}}>
-<View style={{ width: 100, backgroundColor: 'lightyellow'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center'}}>{item.Fullname}</Text>
 </View>
-<View style={{ width: 100, backgroundColor: 'lavender'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>{item.HOUSE_NAME}</Text>
 </View>
-<View style={{ width: 100, backgroundColor: 'lightblue'}}>
+<View style={{ width: 100, backgroundColor: 'white'}}>
 <Text style={{ fontSize: 16, fontWeight: 'bold' , textAlign: 'center'}}>{item.STATUS}</Text>
 </View>
 </View>
@@ -111,19 +150,29 @@ const Dashboard = ({navigation, route}) =>{
 <View>
 <ScrollView style={{marginTop: 10, flexDirection:'row'}} horizontal={true}>
     <Card item = {Tenants}/>
-    <Card item = {complaints}/>
-    <Card item = {maintenance}/>
+    <Card2 item = {complaints}/>
+    <Card3 item = {maintenance}/>
          
 </ScrollView>
+{showTenant =='tenant' ? (
+    <>
+    <Text style = {{fontWeight:'bold', fontSize:25, paddingLeft:100 }}>TENANTS</Text>
+    <Tenant/>
+    <FlatList
+          
+           vertical={true} 
+           data={listTenants.tenants}
+           keyExtractor={(item) => item.REF}
+           renderItem={tenantCard}           
+           /> 
+           </>
+)
+: showTenant =='complaints' ?(
+<Compcards/>
+):(
+<Contcard />
+)}
  
-<Tenant/>
-<FlatList
-      
-       vertical={true} 
-       data={listTenants.tenants}
-       keyExtractor={(item) => item.REF}
-       renderItem={tenantCard}           
-       /> 
 
 </View>
 

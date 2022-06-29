@@ -4,8 +4,11 @@ import { createNavigationContainerRef, StackActions } from "@react-navigation/na
 import Welcome from "../screens/welcome";
 import { NavigationContainer } from "@react-navigation/native";
 import SearchDrop from '../screens/SHARED/SearchDrop';
+import Info from '../screens/TENANT/info';
 import Tabs from './tabs';
+import TenantOrderDetail from '../screens/TENANT/TenantOrderDetail';
 import AdminTabs from './AdminTabs';
+import Complaints from '../screens/TENANT/Complaints';
 import OrderDetail from '../screens/ADMIN/orderDetail';
 import EditUser from '../screens/SHARED/EditUser';
 import HouseDetail from '../screens/TENANT/HouseDetail';
@@ -79,6 +82,27 @@ function Rod(){
                     }}
                     />
                     <Stack.Screen
+                    name="Info"
+                    component={Info}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+                    <Stack.Screen
+                    name="Complaints"
+                    component={Complaints}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+                    <Stack.Screen
+                    name="TenantOrderDetail"
+                    component={TenantOrderDetail}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+                    <Stack.Screen
                     name="SearchDrop"
                     component={SearchDrop}
                     options ={{
@@ -101,6 +125,13 @@ function Rod(){
                <Stack.Screen
                     name="UserProfile"
                     component={UserProfile}
+                    options ={{
+                        headerShown: false,
+                    }}
+                    />
+                    <Stack.Screen
+                    name="EditUser"
+                    component={EditUser}
                     options ={{
                         headerShown: false,
                     }}

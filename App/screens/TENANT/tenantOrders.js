@@ -18,7 +18,7 @@ const TenantOrders = ({navigation, route}) =>{
    
     const Card = ({item}) =>{
         return (
-        <TouchableOpacity onPress={() => navigation.navigate('OrderDetail', item)}>
+        <TouchableOpacity onPress={() => navigation.navigate('TenantOrderDetail', item)}>
 <View style={styles.card}>
                    <Image
                       style={styles.image}

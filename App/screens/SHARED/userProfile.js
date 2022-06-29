@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   btn:{
       height: 60,
       marginHorizontal: 20,
-      backgroundColor: '#ff5a66',
+      backgroundColor: "#00b5ec",
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',

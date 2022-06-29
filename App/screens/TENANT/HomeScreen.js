@@ -110,7 +110,7 @@ useEffect(() =>{
 <View style={styles.header}>
 <View>
     <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>WELCOME</Text>
-    <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>{info.user.Fullname}</Text>
+    <Text style={{color:'black', fontSize: 20, fontWeight: 'bold'}}>MR.{info.user.Fullname}</Text>
 </View>
 <TouchableOpacity onPress={()=> navigation.navigate('UserProfile')}>
 <Image source={require('../../assets/person.jpeg')} style={styles.profile}/>

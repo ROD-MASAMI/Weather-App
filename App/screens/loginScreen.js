@@ -16,10 +16,8 @@ import axios from 'axios';
   const [password, setPassword] = useState('');
   const [successMessage, setSuccess] = useState('');
 
- const onLogin =  (email, password) =>{
+ const onLogin = (email, password) =>{
    
-  
-  
     if(!email || !password){
         alert("Please enter all  fields")
         
@@ -28,12 +26,9 @@ import axios from 'axios';
        axios.post(`${baseURL}login`,{email:email, password:password}).then(response =>{
          if(response.data.status){
            setInfo(response.data);
-          
-          
+
          }
          else{
-           
-           
            alert(response.data.message)
          }
          
