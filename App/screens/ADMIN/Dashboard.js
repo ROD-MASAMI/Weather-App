@@ -19,17 +19,17 @@ const Dashboard = ({navigation, route}) =>{
     const [showTenant, setShowTenant] = useState('tenant');
     const [Tenants, setTenants] = useState({
         title: 'Tenants',
-        figure: 1,
+        figure: '',
         color: 'lavender'
     }); 
     const [complaints, setComplaints] = useState({
         title: 'complaints',
-        figure: '10',
+        figure: '',
         color: 'lightblue',
     });
     const [maintenance, setMaintenance] = useState({
         title: 'contracts',
-        figure: '10',
+        figure: '',
         color: 'lightyellow',
     });
     

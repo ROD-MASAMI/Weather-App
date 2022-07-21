@@ -16,23 +16,26 @@ import axios from 'axios';
   const [password, setPassword] = useState('');
   const [successMessage, setSuccess] = useState('');
 
- const onLogin = (email, password) =>{
+ const onLogin = async  (email, password) =>{
    
     if(!email || !password){
         alert("Please enter all  fields")
         
       }
       else{
-       axios.post(`${baseURL}login`,{email:email, password:password}).then(response =>{
+        try{
+          setLoading(true);
+      const response = await axios.post(`${baseURL}login`,{email:email, password:password});
          if(response.data.status){
+          setLoading(false);
            setInfo(response.data);
-
+           
          }
          else{
            alert(response.data.message)
          }
          
-       }).catch(error => alert(error));
+       }catch(error) { alert(error)};
         
         
       }

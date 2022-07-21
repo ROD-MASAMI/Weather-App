@@ -136,9 +136,9 @@ const HouseDetail = ({navigation, route}) => {
               <Text style={{color: COLORS.white}}>Book Now</Text>
             </View>
             </TouchableOpacity>
-            ) :(<TouchableOpacity>
+            ) :(<TouchableOpacity onPress={() => navigation.navigate('Moreinfo', {item: 9, otherParam:'',})}>
             <View style={style.bookNowBtn}>
-              <Text ></Text>
+              <Text style={{color: COLORS.white}}>ADD INFO</Text>
             </View>
             </TouchableOpacity>)}
           </View>

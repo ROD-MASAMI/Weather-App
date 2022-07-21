@@ -104,7 +104,7 @@ const AdminHome = ({navigation, route}) =>{
            <MaterialIcons name="search" size={25} color={COLORS.grey} />
            <TextInput style={{paddingBottom:15, paddingLeft:10}} placeholder='search address, city, location' onChangeText={onSearch}/>
            </View>
-           <TouchableOpacity style={styles.sortBtn}>
+           <TouchableOpacity style={styles.sortBtn} onPress ={() => navigation.navigate('Addhouse')}>
            <AntDesign name="plus" size={24} color="white" />
            </TouchableOpacity>
        </View>
